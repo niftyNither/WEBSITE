@@ -1,0 +1,114 @@
+body {
+    box-sizing: border-box;
+    background-image: url("/Proj/image/subtle-prism.svg");
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-repeat: no-repeat;
+}
+
+li, a, button {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #0A5159;
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.nav__links {
+    list-style: none;
+}
+
+.nav__links li {
+   display: inline-block;
+   padding: 0px 20px;  
+}
+
+.nav__links li a {
+    transition: all 0.3 ease 0s;
+}
+
+button {
+    padding: 9px 25px;
+    background-color: #0A5159;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    color: #32D9C8;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    outline: none;
+    letter-spacing: 2.5px;
+}
+
+button:hover {
+    background-color: #2BD9D9;
+    color: #0A5159;
+}
+
+.hero-container {
+    min-height: 500px;
+    padding: 75px 20px;
+    max-width: 990px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-content {
+    max-width: 450px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .hero-header, .hero-subheader {
+    font-weight: 300;
+  }
+  .hero-header {
+    font-size: 47.25px;
+    margin-bottom: 20px;
+  }
+  .hero-subheader {
+    font-size: 21px;
+    padding-bottom: 20px;
+    margin-bottom: 0;
+  }
+  .try-business {
+    margin: 30px 0 0 0;  
+  }
+  .try-business-button {
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 21px;
+    text-decoration: none;
+    padding: 19px 26px;
+    color: #32D9C8;
+    background-color: #0A5159;
+  }
+  .try-business-button:hover {
+    background-color: #2BD9D9;
+    color: #0A5159;
+}
+  .try-business-footer {
+    display: block;
+    font-size: 16px;
+    margin-top: 15px;
+  }
+  .try-business-footer a {
+    text-decoration: none;
+    color: #0071e0;
+    border-bottom: 1px solid #0071e0;
+  }
+
+  /* Footer */
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+  }

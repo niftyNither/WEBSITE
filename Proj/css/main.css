@@ -150,3 +150,15 @@ button:hover {
     flex-direction: column;
   }
 }
+
+#red,
+#green,
+#blue {
+  float: left;
+  width: 15px;
+  margin: 30px;
+}
+
+#fragment-2 {
+  min-height: 250px;
+}

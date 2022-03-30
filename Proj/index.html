@@ -1,261 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;1,200&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/jquery/jquery-ui.css">
-    <script src="/jquery/external/jquery/jquery.js"></script>
-    <script src="/jquery/jquery-ui.js"></script>
-    <style>
-      label, input { display:block; }
-      input.text { margin-bottom:12px; width:95%; padding: .4em; }
-      fieldset { padding:0; border:0; margin-top:25px; }
-      h1 { font-size: 1.2em; margin: .6em 0; }
-      div#users-contain { width: 350px; margin: 20px 0; }
-      div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-      div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-      .ui-dialog .ui-state-error { padding: .3em; }
-      .validateTips { border: 1px solid transparent; padding: 0.3em; }
-    </style>
 
-    <script>
-      $( function() {
-          $("#accordion").accordion();
-      });
-      $( function() {
-          $("#tabs").tabs();
-      });
-      $(document).ready(function() {
-        $('#example').DataTable();
-      });
-      $( function() {
-    var dialog, form,
- 
-      // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
-      emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-      name = $( "#name" ),
-      email = $( "#email" ),
-      password = $( "#password" ),
-      allFields = $( [] ).add( name ).add( email ).add( password ),
-      tips = $( ".validateTips" );
- 
-    function updateTips( t ) {
-      tips
-        .text( t )
-        .addClass( "ui-state-highlight" );
-      setTimeout(function() {
-        tips.removeClass( "ui-state-highlight", 1500 );
-      }, 500 );
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;1,200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/jquery/jquery-ui.css">
+  <script src="/jquery/external/jquery/jquery.js"></script>
+  <script src="/jquery/jquery-ui.js"></script>
+  <style>
+    label,
+    input {
+      display: block;
     }
- 
-    function checkLength( o, n, min, max ) {
-      if ( o.val().length > max || o.val().length < min ) {
-        o.addClass( "ui-state-error" );
-        updateTips( "Length of " + n + " must be between " +
-          min + " and " + max + "." );
-        return false;
-      } else {
-        return true;
+
+    input.text {
+      margin-bottom: 12px;
+      width: 95%;
+      padding: .4em;
+    }
+
+    fieldset {
+      padding: 0;
+      border: 0;
+      margin-top: 25px;
+    }
+
+    h1 {
+      font-size: 1.2em;
+      margin: .6em 0;
+    }
+
+    div#users-contain {
+      width: 350px;
+      margin: 20px 0;
+    }
+
+    div#users-contain table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    div#users-contain table td,
+    div#users-contain table th {
+      border: 1px solid #eee;
+      padding: .6em 10px;
+      text-align: left;
+    }
+
+    .ui-dialog .ui-state-error {
+      padding: .3em;
+    }
+
+    .validateTips {
+      border: 1px solid transparent;
+      padding: 0.3em;
+    }
+  </style>
+
+  <script>
+    $(function () {
+      $("#accordion").accordion();
+    });
+    $(function () {
+      $("#tabs").tabs();
+    });
+    $(document).ready(function () {
+      $('#example').DataTable();
+    });
+    $(function () {
+      var dialog, form,
+
+        // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+        emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+        name = $("#name"),
+        email = $("#email"),
+        password = $("#password"),
+        allFields = $([]).add(name).add(email).add(password),
+        tips = $(".validateTips");
+
+      function updateTips(t) {
+        tips
+          .text(t)
+          .addClass("ui-state-highlight");
+        setTimeout(function () {
+          tips.removeClass("ui-state-highlight", 1500);
+        }, 500);
       }
-    }
- 
-    function checkRegexp( o, regexp, n ) {
-      if ( !( regexp.test( o.val() ) ) ) {
-        o.addClass( "ui-state-error" );
-        updateTips( n );
-        return false;
-      } else {
-        return true;
-      }
-    }
- 
-    function addUser() {
-      var valid = true;
-      allFields.removeClass( "ui-state-error" );
- 
-      valid = valid && checkLength( name, "username", 3, 16 );
-      valid = valid && checkLength( email, "email", 6, 80 );
-      valid = valid && checkLength( password, "password", 5, 16 );
- 
-      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
-      valid = valid && checkRegexp( email, emailRegex, "eg. ui@jquery.com" );
-      valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
- 
-      if ( valid ) {
-        $( "#users tbody" ).append( "<tr>" +
-          "<td>" + name.val() + "</td>" +
-          "<td>" + email.val() + "</td>" +
-          "<td>" + password.val() + "</td>" +
-        "</tr>" );
-        dialog.dialog( "close" );
-      }
-      return valid;
-    }
- 
-    dialog = $( "#dialog-form" ).dialog({
-      autoOpen: false,
-      height: 400,
-      width: 350,
-      modal: true,
-      buttons: {
-        "Dodaj nowy": addUser,
-        Anuluj: function() {
-          dialog.dialog( "close" );
+
+      function checkLength(o, n, min, max) {
+        if (o.val().length > max || o.val().length < min) {
+          o.addClass("ui-state-error");
+          updateTips("Length of " + n + " must be between " +
+            min + " and " + max + ".");
+          return false;
+        } else {
+          return true;
         }
-      },
-      close: function() {
-        form[ 0 ].reset();
-        allFields.removeClass( "ui-state-error" );
       }
+
+      function checkRegexp(o, regexp, n) {
+        if (!(regexp.test(o.val()))) {
+          o.addClass("ui-state-error");
+          updateTips(n);
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      function addUser() {
+        var valid = true;
+        allFields.removeClass("ui-state-error");
+
+        valid = valid && checkLength(name, "username", 3, 16);
+        valid = valid && checkLength(email, "email", 6, 80);
+        valid = valid && checkLength(password, "password", 5, 16);
+
+        valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+        valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
+        valid = valid && checkRegexp(password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9");
+
+        if (valid) {
+          $("#users tbody").append("<tr>" +
+            "<td>" + name.val() + "</td>" +
+            "<td>" + email.val() + "</td>" +
+            "<td>" + password.val() + "</td>" +
+            "</tr>");
+          dialog.dialog("close");
+        }
+        return valid;
+      }
+
+      dialog = $("#dialog-form").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 350,
+        modal: true,
+        buttons: {
+          "Dodaj nowy": addUser,
+          Anuluj: function () {
+            dialog.dialog("close");
+          }
+        },
+        close: function () {
+          form[0].reset();
+          allFields.removeClass("ui-state-error");
+        }
+      });
+
+      form = dialog.find("form").on("submit", function (event) {
+        event.preventDefault();
+        addUser();
+      });
+
+      $("#create-user").button().on("click", function () {
+        dialog.dialog("open");
+      });
     });
- 
-    form = dialog.find( "form" ).on( "submit", function( event ) {
-      event.preventDefault();
-      addUser();
+  </script>
+  <script>
+    $(function () {
+      $(".controlgroup").controlgroup()
+      $(".controlgroup-vertical").controlgroup({
+        "direction": "vertical"
+      });
     });
- 
-    $( "#create-user" ).button().on( "click", function() {
-      dialog.dialog( "open" );
+  </script>
+  <script>
+    $(function () {
+      function hexFromRGB(r, g, b) {
+        var hex = [
+          r.toString(16),
+          g.toString(16),
+          b.toString(16)
+        ];
+        $.each(hex, function (nr, val) {
+          if (val.length === 1) {
+            hex[nr] = "0" + val;
+          }
+        });
+        return hex.join("").toUpperCase();
+      }
+      function refreshSwatch() {
+        var
+          red = $("#red").slider("value"),
+          green = $("#green").slider("value"),
+          blue = $("#blue").slider("value"),
+          hex = hexFromRGB(red, 0, 255 - red);
+        hex1 = hexFromRGB(220 - green, 220 - green, 220);
+        hex2 = hexFromRGB(-40 + blue, 255 - blue, 0 + blue);
+        $("#red").css("background-color", "#" + hex);
+        $("#green").css("background-color", "#" + hex1);
+        $("#blue").css("background-color", "#" + hex2);
+
+
+      }
+
+      $("#red, #green, #blue").slider({
+        orientation: "vertical",
+        range: "min",
+        max: 255,
+        value: 127,
+        slide: refreshSwatch,
+        change: refreshSwatch
+      });
+      $("#red, green, blue").slider("value", 255);
+
+      var input = $('input')
+      input.each(function () {
+        input.on('input', function () {
+          if ($(this).val().length > 0) {
+            $(this).css("border-color", "green")
+          } else {
+            $(this).css("border-color", "red")
+          }
+        })
+      })
+
     });
-  } );
-    </script>
-    <title>Cloud Technolgies</title>
+  </script>
+  <title>Cloud Technolgies</title>
 </head>
+
 <body>
-    <header>
-        <nav>
-            <ul class="nav__links">
-                <li><a href="#"></a>Services</li>
-                <li><a href="#"></a>Projects</li>
-                <li><a href="#"></a>About us</li>
-            </ul>
-        </nav>
-        <a class="cta" href="#"><button>Contact</button></a>
-    </header>
-        <div class="hero-container">
-          <div class="hero-content">
-            <h1 class="hero-header">
-                Take productivity to the next level
-              </h1>
-            <h2 class="hero-subheader">
-                Dropbox Business is the secure file sharing and storage solution that employees love and IT admins trust.
-              </h2>
-            <div class="try-business">
-              <a href="#" class="try-business-button">Try 1 month free</a>
-              <span class="try-business-footer">
-                  or <a href="#">purchase now</a>
-                </span>
-            </div>
-          </div>
-        </div>
-        <!-- The flexible grid (content) -->
-<div class="row">
-  <div class="side">
-    <h2>About Me</h2>
-    <h5>Photo of me:</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-    <h3>More Text</h3>
-    <p>Lorem ipsum dolor sit ame.</p>
-    <div class="fakeimg" style="height:60px;">Image</div><br>
-    <div class="fakeimg" style="height:60px;">Image</div><br>
-    <div class="fakeimg" style="height:60px;">Image</div>
-  </div>
-  <div class="main">
-    <h2>TITLE HEADING</h2>
-    <h5>Title description, Dec 7, 2017</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p>Some text..</p>
-    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    <br>
-    <div id="accordion">
-      <h3>Section 1</h3>
-      <div>
-        <div id="tabs">
-          <ul>
-            <li><a href="#fragment-1">Tabelka</a></li>
-            <li><a href="#fragment-2">Sterowanie</a></li>
-          </ul>
-          <div id="fragment-1">
-            <div id="dialog-form" title="Create new user">
-              <p class="validateTips">All form fields are required.</p>
-             
-              <form>
-                <fieldset>
-                  <label for="name">Name</label>
-                  <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
-                  <label for="email">Email</label>
-                  <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
-                  <label for="password">Password</label>
-                  <input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all">
-             
-                  <!-- Allow form submission with keyboard without duplicating the dialog button -->
-                  <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-                </fieldset>
-              </form>
-            </div>
-             
-             
-            <div id="users-contain" class="ui-widget">
-              <h1>Existing Users:</h1>
-              <table id="users" class="ui-widget ui-widget-content">
-                <thead>
-                  <tr class="ui-widget-header ">
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>John Doe</td>
-                    <td>john.doe@example.com</td>
-                    <td>johndoe1</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <button id="create-user">Dodaj</button>
-          </div>
-          <div id="fragment-2">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-          </div>
-        </div>
-      </div>
-      <h3>Section 2</h3>
-      <div>
-        <p>
-          Po pobraniu biblioteki, wszystkie źródła należy rozpakować do odpowiedniego podkatalogu (np. jQuery) w katalogu naszego projektu ze stroną internetową, następnie dołączamy źródła biblioteki i wymagane pliki szablonu (css) do projektowanej strony internetowej. Poniżej przedstawiono wycinek kodu:
-        </p>
-      </div>
-      <h3>Section 3</h3>
-      <div>
-        <p>
-          Po pobraniu biblioteki, wszystkie źródła należy rozpakować do odpowiedniego podkatalogu (np. jQuery) w katalogu naszego projektu ze stroną internetową, następnie dołączamy źródła biblioteki i wymagane pliki szablonu (css) do projektowanej strony internetowej. Poniżej przedstawiono wycinek kodu:
-        </p>
-      </div>
-      <h3>Section 4</h3>
-      <div>
-        <p>
-          Po pobraniu biblioteki, wszystkie źródła należy rozpakować do odpowiedniego podkatalogu (np. jQuery) w katalogu naszego projektu ze stroną internetową, następnie dołączamy źródła biblioteki i wymagane pliki szablonu (css) do projektowanej strony internetowej. Poniżej przedstawiono wycinek kodu:
-        </p>
+  <header>
+    <nav>
+      <ul class="nav__links">
+        <li><a href="#"></a>Services</li>
+        <li><a href="#"></a>Projects</li>
+        <li><a href="#"></a>About us</li>
+      </ul>
+    </nav>
+    <a class="cta" href="#"><button>Contact</button></a>
+  </header>
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-header">
+        Take productivity to the next level
+      </h1>
+      <h2 class="hero-subheader">
+        Dropbox Business is the secure file sharing and storage solution that employees love and IT admins trust.
+      </h2>
+      <div class="try-business">
+        <a href="#" class="try-business-button">Try 1 month free</a>
+        <span class="try-business-footer">
+          or <a href="#">purchase now</a>
+        </span>
       </div>
     </div>
-    <h2>TITLE HEADING</h2>
-    <h5>Title description, Sep 2, 2017</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p>Some text..</p>
-    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
   </div>
-</div>
-        <!-- Footer -->
-<div class="footer">
+  <!-- The flexible grid (content) -->
+  <div class="row">
+    <div class="side">
+      <h2>About Me</h2>
+      <h5>Photo of me:</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+      <h3>More Text</h3>
+      <p>Lorem ipsum dolor sit ame.</p>
+      <div class="fakeimg" style="height:60px;">Image</div><br>
+      <div class="fakeimg" style="height:60px;">Image</div><br>
+      <div class="fakeimg" style="height:60px;">Image</div>
+    </div>
+    <div class="main">
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Dec 7, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+      </p>
+      <br>
+      <div id="accordion">
+        <h3>Section 1</h3>
+        <div>
+          <div id="tabs">
+            <ul>
+              <li><a href="#fragment-1">Tabelka</a></li>
+              <li><a href="#fragment-2">Sterowanie</a></li>
+            </ul>
+            <div id="fragment-1">
+              <div id="dialog-form" title="Create new user">
+                <p class="validateTips">All form fields are required.</p>
+                <form>
+                  <fieldset data-role="controlgroup">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name" value="Jane Smith"
+                      class="text ui-widget-content ui-corner-all">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" value="jane@smith.com"
+                      class="text ui-widget-content ui-corner-all">
+                    <label for="password">Password</label>
+                    <select type="password" name="password" id="password" value="xxxxxxx"
+                      class="text ui-widget-content ui-corner-all">
+                      <option>johndoe1</option>
+                      <option>weak</option>
+                    </select>
+                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+
+                  </fieldset>
+                </form>
+              </div>
+
+
+              <div id="users-contain" class="ui-widget">
+                <h1>Existing Users:</h1>
+                <table id="users" class="ui-widget ui-widget-content">
+                  <thead>
+                    <tr class="ui-widget-header ">
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Password</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>John Doe</td>
+                      <td>john.doe@example.com</td>
+                      <td>johndoe1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <button id="create-user">Dodaj</button>
+            </div>
+            <div id="fragment-2">
+              <div class="ui-widget-content" style="border:0;">
+                <p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding:4px;">
+                  <span class="ui-icon ui-icon-pencil" style="float:left; margin:-2px 5px 0 0;"></span>
+                  Parametry pracy klimatyzacji
+                </p>
+                <P id="left">Temperatura Wilgotność AIQ</P>
+
+                <div id="red"></div>
+
+                <div id="green"></div>
+
+                <div id="blue"></div>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>Section 2</h3>
+        <div>
+          <p>
+            Po pobraniu biblioteki, wszystkie źródła należy rozpakować do odpowiedniego podkatalogu (np. jQuery) w
+            katalogu naszego projektu ze stroną internetową, następnie dołączamy źródła biblioteki i wymagane
+            pliki szablonu (css) do projektowanej strony internetowej. Poniżej przedstawiono wycinek kodu:
+          </p>
+        </div>
+        <h3>Section 3</h3>
+        <div>
+          <p>
+            Po pobraniu biblioteki, wszystkie źródła należy rozpakować do odpowiedniego podkatalogu (np. jQuery) w
+            katalogu naszego projektu ze stroną internetową, następnie dołączamy źródła biblioteki i wymagane
+            pliki szablonu (css) do projektowanej strony internetowej. Poniżej przedstawiono wycinek kodu:
+          </p>
+        </div>
+        <h3>Section 4</h3>
+        <div>
+          <p>
+            Po pobraniu biblioteki, wszystkie źródła należy rozpakować do odpowiedniego podkatalogu (np. jQuery) w
+            katalogu naszego projektu ze stroną internetową, następnie dołączamy źródła biblioteki i wymagane
+            pliki szablonu (css) do projektowanej strony internetowej. Poniżej przedstawiono wycinek kodu:
+          </p>
+        </div>
+      </div>
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Sep 2, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+      </p>
+    </div>
+  </div>
+  <!-- Footer -->
+  <div class="footer">
     <h2>Footer</h2>
   </div>
 </body>
+
 </html>
